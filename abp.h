@@ -11,6 +11,10 @@ typedef struct TNodoA
 TNodoA* removeABP(TNodoA *a, int chave);
 TNodoA* insereABP(TNodoA *a, int chave);
 TNodoA* consultaABP(TNodoA *a, int chave);
+
 void imprimeABP(TNodoA *a);
+
+void geraDot(TNodoA *a);
+void escreveNodos(TNodoA *a, FILE *arq);
 
 #endif // ABP_H_INCLUDED
