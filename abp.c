@@ -1,5 +1,7 @@
 #include <stdlib.h>
+#include <stdio.h>
 #include "abp.h"
+#include "stack.h"
 
 /**
 - consultaABP:
@@ -27,7 +29,7 @@ Dada a raiz de uma arvore e uma chave, cria um
 novo nodo devidamente posicionado. retorna a arvore
 atualizada.
 **/
-TNodoA* insereArvore(TNodoA *a, int chave)
+TNodoA* insereABP(TNodoA *a, int chave)
 {
 
     //variavel que vai ser o novo nodo
@@ -136,3 +138,45 @@ TNodoA* removeABP(TNodoA *a, int chave)
 
     return a;
 }
+
+/**
+- imprimeABP:
+Imprime uma ABP em ordem crescente, seguindo a
+ordem: Esquerda -> Raiz -> Direita. Utiliza pilha
+para realizar o algorítimo sem recursão.
+**/
+void imprimeABP(TNodoA *a)
+{
+    //cria a pilha usada no algorítimo
+    Pilha pilha;
+    inicializaPilha(&pilha);
+
+    //ponteiro que inicia na raiz
+    TNodoA *atual = a;
+
+    //loop principal
+    while(!pilhaVazia(&pilha) || atual != NULL)
+    {
+        //Estado 1: ir pra esquerda o maximo que der e ir empilhando tudo no caminho
+        while(atual != NULL)
+        {
+            push(&pilha, atual);
+            atual = atual->esq;
+        }
+
+        //Estado 2: imprime o atual e tenta ir pra direita.
+        atual = pop(&pilha);
+        printf("%d ", atual->chave);
+
+        atual = atual->dir;
+    }
+}
+
+
+
+
+
+
+
+
+

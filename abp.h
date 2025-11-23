@@ -9,7 +9,8 @@ typedef struct TNodoA
 }TNodoA;
 
 TNodoA* removeABP(TNodoA *a, int chave);
-TNodoA* insereArvore(TNodoA *a, int chave);
+TNodoA* insereABP(TNodoA *a, int chave);
 TNodoA* consultaABP(TNodoA *a, int chave);
+void imprimeABP(TNodoA *a);
 
 #endif // ABP_H_INCLUDED
