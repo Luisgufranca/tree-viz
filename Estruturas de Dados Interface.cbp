@@ -31,9 +31,17 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
+		<Unit filename="abp.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="abp.h" />
 		<Unit filename="main.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="stack.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="stack.h" />
 		<Extensions>
 			<lib_finder disable_auto="1" />
 		</Extensions>
