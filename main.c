@@ -22,7 +22,24 @@ int main()
     geraDot(arvore);
 
     //executa direto o comando que vai mostrar a arvore por meio do graphviz
-    system("dot -Tpng arvore.dot -o arvore.png");
+    int status = system("dot -Tpng arvore.dot -o arvore.png");
+
+    if (status != 0) {
+        printf("\n[ERRO] O Graphviz (comando 'dot') nao foi encontrado no sistema.\n");
+        printf("Certifique-se de que o Graphviz esta instalado e tente novamente.\n");
+        return 1;
+    }
+    
+    printf("\nImagem da arvore gerada com sucesso: arvore.png\n");
+
+    //abre a imagem gerada dependendo do sistema operacional
+    #ifdef _WIN32
+        system("start arvore.png");
+    #elif __APPLE__
+        system("open arvore.png");
+    #else
+        system("xdg-open arvore.png");
+    #endif
 
     return 0;
 }
