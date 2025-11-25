@@ -88,7 +88,10 @@ TNodoA* removeABP(TNodoA *a, int chave)
 
     //caso o nodo não exista, devolve a árvore
     if(atual == NULL)
+    {
         return a;
+    }
+
 
     //caso 1: nó é folha. Apenas remove o nodo
     if(atual->dir == NULL && atual->esq == NULL)
