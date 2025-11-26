@@ -3,6 +3,12 @@
 #include <string.h>
 #include "abp.h"
 
+
+/**
+- numero:
+Dada uma string, verifica se é numero.
+Retorna 1 (true) ou 0 (false).
+**/
 int numero(char *n)
 {
 
@@ -27,25 +33,21 @@ int numero(char *n)
     return 1;
 }
 
+void imprimeOpcoes()
+{
+    printf("-- GERADOR DE ARVORE BINARIA DE PESQUISA --\n");
+    printf("-insere: Insere um ou mais nodos na arvore\n");
+    printf("-remove: Remove um ou mais nodos na arvore\n");
+    printf("-imprime: Imprime os nodos em ordem crescente\n");
+    printf("-help: Mostra esse guia\n");
+}
+
 int main(int argc, char *argv[]) {
     //argc = ARGUMENT COUNTER
     //argv = ARGUMENT VECTOR
 
-    /**
-    COMANDOS:
-    -insere
-    -remove
-
-    por enquanto, vou implementar que cada comando admite um argumento apenas.
-    provavelmente implementa-se com loop while a maneira com argumentos ilimitados
-
-    tambem precisa ser implementado o sistema em que a arvore fica salva na nuvem
-    e aí da pra ir modificando e vendo em tempo real as mudanças.
-    **/
-
-    //int val_insere = 0;
-    //int val_remove = 0;
     int i = 1; //cursor
+    int menu = 0;
 
     TNodoA *arvore = NULL;
 
@@ -55,16 +57,14 @@ int main(int argc, char *argv[]) {
         {
             if(i + 1 < argc)
             {
-                i++; //incrementa um pelo insere
+                i++; //incrementa cursor
 
                 //enquanto prox argumento é numero...
                 while(i < argc && numero(argv[i]))
                 {
                     arvore = insereABP(arvore, atoi(argv[i]));
-                    i++;
+                    i++; //incrementa cursor
                 }
-                //val_insere = atoi(argv[i + 1]); // essa lógica prevê apenas um argumento
-                //arvore = insereABP(arvore, val_insere);
 
             }
             else { //tratamento do erros
@@ -75,52 +75,64 @@ int main(int argc, char *argv[]) {
         {
             if(i + 1 < argc)
             {
-                i++; //incrementa um pelo insere
+                i++; //incrementa cursor
 
                 //enquanto prox argumento é numero...
                 while(i < argc && numero(argv[i]))
                 {
                     arvore = removeABP(arvore, atoi(argv[i]));
-                    i++;
+                    i++; //incrementa cursor
                 }
-                //val_remove = atoi(argv[i + 1]);
-                //arvore = removeABP(arvore, val_remove);
             }
-            else { //tratamento do erros
+            else
+            { //tratamento do erros
                 fprintf(stderr, "Erro: -remove precisa de um argumento\n");
                 return 1;
             }
-        }else {
-            fprintf(stderr, "Opcao desconhecida: %s\n", argv[i]);
-            i++;
+        }else if(strcmp(argv[i],"-imprime") == 0)
+        {
+            i++; //incrementa cursor
+            printf("Nodos em ordem crescente:\n");
+            imprimeABP(arvore);
+        }else if(strcmp(argv[i],"-help") == 0)
+        {
+            i++; //incrementa cursor
+            imprimeOpcoes();
+            menu = 1;
+        }else
+        {
+            fprintf(stderr, "Opcao desconhecida: %s\n\n", argv[i]);
+            i++; //incrementa cursor
         }
     }
 
-    geraDot(arvore);
-
-    //executa direto o comando que vai mostrar a arvore por meio do graphviz
-    int status = system("dot -Tpng arvore.dot -o arvore.png");
-
-    if (status != 0)
+    if(!menu)
     {
-        printf("\n[ERRO] O comando 'dot' falhou (codigo %d).\n", status);
-        printf("1. Verifique se o Graphviz esta instalado.\n");
-        printf("2. Verifique se o arquivo 'arvore.dot' foi criado na pasta.\n");
-        printf("3. Tente reiniciar o terminal para atualizar o PATH.\n");
-        return 1;
+        geraDot(arvore);
+
+        //executa direto o comando que vai mostrar a arvore por meio do graphviz
+        int status = system("dot -Tpng treeviz.dot -o treeviz.png");
+
+        if (status != 0)
+        {
+            printf("\n[ERRO] O comando 'dot' falhou (codigo %d).\n", status);
+            printf("1. Verifique se o Graphviz esta instalado.\n");
+            printf("2. Verifique se o arquivo 'treeviz.dot' foi criado na pasta.\n");
+            printf("3. Tente reiniciar o terminal para atualizar o PATH.\n");
+            return 1;
+        }
+
+        printf("\nImagem da arvore gerada com sucesso: treeviz.png\n");
+
+        //abre a imagem gerada dependendo do sistema operacional
+        #ifdef _WIN32
+            system("start treeviz.png");
+        #elif __APPLE__
+            system("open treeviz.png");
+        #else
+            system("xdg-open treeviz.png");
+        #endif
     }
-
-    printf("\nImagem da arvore gerada com sucesso: arvore.png\n");
-
-    //abre a imagem gerada dependendo do sistema operacional
-    #ifdef _WIN32
-        system("start arvore.png");
-    #elif __APPLE__
-        system("open arvore.png");
-    #else
-        system("xdg-open arvore.png");
-    #endif
-
 
     return 0;
 }

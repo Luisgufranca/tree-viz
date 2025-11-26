@@ -1,6 +1,6 @@
 CC = gcc
 CFLAGS = -Wall -g
-TARGET = arvore
+TARGET = treeviz
 OBJS = main.o abp.o stack.o
 
 all: $(TARGET)

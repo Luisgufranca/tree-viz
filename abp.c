@@ -49,7 +49,7 @@ TNodoA* insereABP(TNodoA *a, int chave)
     while(atual != NULL)
     {
         pai = atual; //manter o pai um passo antes da descida do atual
-        if(atual->chave < chave)
+        if(atual->chave <= chave)
             atual = atual->dir;
         else
             atual = atual->esq;
@@ -176,22 +176,27 @@ void imprimeABP(TNodoA *a)
 - escreveNodos:
 função recursiva que escreve uma árvore em linguagem dot,
 para ser transcrevida em uma imagem pelo software Graphviz.
+Utiliza ponteiros ao invés de int para permitir impressão de
+nodos iguais.
 **/
 void escreveNodos(TNodoA *a, FILE *arq)
 {
     if(a == NULL)
         return;
 
-    if(a->dir == NULL && a->esq == NULL)
-        fprintf(arq, "%d;\n", a->chave);
+    fprintf(arq, "    N%p [label=\"%d\"];\n", (void*)a, a->chave);
 
     if(a->esq != NULL)
-        fprintf(arq, "%d -> %d;\n", a->chave,a->esq->chave);
-    if(a->dir != NULL)
-        fprintf(arq, "%d -> %d;\n", a->chave,a->dir->chave);
+    {
+        fprintf(arq, "    N%p -> N%p;\n", (void*)a, (void*)a->esq);
+        escreveNodos(a->esq, arq);
+    }
 
-    escreveNodos(a->esq, arq);
-    escreveNodos(a->dir, arq);
+    if(a->dir != NULL)
+    {
+        fprintf(arq, "    N%p -> N%p;\n", (void*)a, (void*)a->dir);
+        escreveNodos(a->dir, arq);
+    }
 }
 
 /**
@@ -203,7 +208,12 @@ de entrada para o software Graphviz.
 void geraDot(TNodoA *a)
 {
     //cria/sobrepõe o arquivo em "w"
-    FILE *arq = fopen("arvore.dot", "w");
+    FILE *arq = fopen("treeviz.dot", "w");
+
+    if (arq == NULL) {
+        printf("Erro ao criar arquivo dot\n");
+        return;
+    }
 
     fprintf(arq, "digraph G {\n");
     fprintf(arq, "    node [shape=circle, style=filled, fillcolor=lightgrey];\n");
