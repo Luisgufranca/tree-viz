@@ -88,10 +88,7 @@ TNodoA* removeABP(TNodoA *a, int chave)
 
     //caso o nodo não exista, devolve a árvore
     if(atual == NULL)
-    {
         return a;
-    }
-
 
     //caso 1: nó é folha. Apenas remove o nodo
     if(atual->dir == NULL && atual->esq == NULL)
@@ -185,6 +182,9 @@ void escreveNodos(TNodoA *a, FILE *arq)
     if(a == NULL)
         return;
 
+    if(a->dir == NULL && a->esq == NULL)
+        fprintf(arq, "%d;\n", a->chave);
+
     if(a->esq != NULL)
         fprintf(arq, "%d -> %d;\n", a->chave,a->esq->chave);
     if(a->dir != NULL)
@@ -206,6 +206,7 @@ void geraDot(TNodoA *a)
     FILE *arq = fopen("arvore.dot", "w");
 
     fprintf(arq, "digraph G {\n");
+    fprintf(arq, "    node [shape=circle, style=filled, fillcolor=lightgrey];\n");
 
     //função recursiva
     escreveNodos(a, arq);

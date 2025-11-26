@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1764037033 source:c:\users\usuario\desktop\projetos codeblocks\segundo semestre\estruturas de dados com raylib\estruturas de dados interface\abp.c
+1764039142 source:c:\users\usuario\desktop\projetos codeblocks\segundo semestre\estruturas de dados com raylib\estruturas de dados interface\abp.c
 	<stdlib.h>
 	<stdio.h>
 	"abp.h"
@@ -7,9 +7,10 @@
 
 1763931586 c:\users\usuario\desktop\projetos codeblocks\segundo semestre\estruturas de dados com raylib\estruturas de dados interface\abp.h
 
-1764016578 source:c:\users\usuario\desktop\projetos codeblocks\segundo semestre\estruturas de dados com raylib\estruturas de dados interface\main.c
+1764129644 source:c:\users\usuario\desktop\projetos codeblocks\segundo semestre\estruturas de dados com raylib\estruturas de dados interface\main.c
 	<stdio.h>
 	<stdlib.h>
+	<string.h>
 	"abp.h"
 
 1763921654 source:c:\users\usuario\desktop\projetos codeblocks\segundo semestre\estruturas de dados com raylib\estruturas de dados interface\stack.c

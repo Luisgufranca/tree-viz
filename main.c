@@ -3,7 +3,29 @@
 #include <string.h>
 #include "abp.h"
 
+int numero(char *n)
+{
 
+    if(n == NULL)
+        return 0;
+
+    int i = 0;
+    int len = strlen(n);
+
+    //caso numero negativo
+    if(n[0] == '-')
+        i = 1;
+
+    while(i < len)
+    {
+        //caso nao seja numero
+        if(n[i] < 48 || n[i] > 57)
+            return 0;
+        i++;
+    }
+
+    return 1;
+}
 
 int main(int argc, char *argv[]) {
     //argc = ARGUMENT COUNTER
@@ -21,8 +43,8 @@ int main(int argc, char *argv[]) {
     e aí da pra ir modificando e vendo em tempo real as mudanças.
     **/
 
-    int val_insere = 0;
-    int val_remove = 0;
+    //int val_insere = 0;
+    //int val_remove = 0;
     int i = 1; //cursor
 
     TNodoA *arvore = NULL;
@@ -33,9 +55,17 @@ int main(int argc, char *argv[]) {
         {
             if(i + 1 < argc)
             {
-                val_insere = atoi(argv[i + 1]);
-                arvore = insereABP(arvore, val_insere);
-                i += 2; //dois argumentos admitidos aqui
+                i++; //incrementa um pelo insere
+
+                //enquanto prox argumento é numero...
+                while(i < argc && numero(argv[i]))
+                {
+                    arvore = insereABP(arvore, atoi(argv[i]));
+                    i++;
+                }
+                //val_insere = atoi(argv[i + 1]); // essa lógica prevê apenas um argumento
+                //arvore = insereABP(arvore, val_insere);
+
             }
             else { //tratamento do erros
                 fprintf(stderr, "Erro: -insere precisa de um argumento\n");
@@ -45,9 +75,16 @@ int main(int argc, char *argv[]) {
         {
             if(i + 1 < argc)
             {
-                val_remove = atoi(argv[i + 1]);
-                arvore = removeABP(arvore, val_remove);
-                i += 2; //dois argumentos admitidos aqui
+                i++; //incrementa um pelo insere
+
+                //enquanto prox argumento é numero...
+                while(i < argc && numero(argv[i]))
+                {
+                    arvore = removeABP(arvore, atoi(argv[i]));
+                    i++;
+                }
+                //val_remove = atoi(argv[i + 1]);
+                //arvore = removeABP(arvore, val_remove);
             }
             else { //tratamento do erros
                 fprintf(stderr, "Erro: -remove precisa de um argumento\n");
@@ -56,13 +93,10 @@ int main(int argc, char *argv[]) {
         }else {
             fprintf(stderr, "Opcao desconhecida: %s\n", argv[i]);
             i++;
-            break;
         }
     }
 
     geraDot(arvore);
-
-
 
     //executa direto o comando que vai mostrar a arvore por meio do graphviz
     int status = system("dot -Tpng arvore.dot -o arvore.png");
