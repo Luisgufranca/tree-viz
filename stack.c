@@ -2,6 +2,11 @@
 #include <stdio.h>
 #include "stack.h"
 
+/**
+Implementações de pilha, usados aqui para
+imprimir ABP
+**/
+
 void inicializaPilha(Pilha *p)
 {
     p->topo = -1;
@@ -9,7 +14,7 @@ void inicializaPilha(Pilha *p)
 
 void push(Pilha *p, TNodoA *nodo)
 {
-    //verifica se pilha não estourou o MAX_PILHA
+    //verifica se nao estorou
     if(p->topo < MAX_STACK-1)
     {
         p->topo++;

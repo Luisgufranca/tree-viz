@@ -4,26 +4,6 @@
 #include "stack.h"
 
 /**
-- consultaABP:
-Dada a raiz de uma árvore e uma chave, retorna o nodo
-que possui essa chave. Caso não exista, retorna NULL.
-**/
-TNodoA* consultaABP(TNodoA *a, int chave)
-{
-    while(a != NULL)
-    {
-        if(chave == a->chave)
-            return a;
-        if(chave < a->chave)
-            a = a->esq;
-        else
-            a = a->dir;
-    }
-
-    return NULL;
-}
-
-/**
 - insereArvore:
 Dada a raiz de uma arvore e uma chave, cria um
 novo nodo devidamente posicionado. retorna a arvore

@@ -47,7 +47,7 @@ int main(int argc, char *argv[]) {
     //argv = ARGUMENT VECTOR
 
     int i = 1; //cursor
-    int menu = 0;
+    int menu = 0, desenha = 0;
 
     TNodoA *arvore = NULL;
 
@@ -58,7 +58,7 @@ int main(int argc, char *argv[]) {
             if(i + 1 < argc)
             {
                 i++; //incrementa cursor
-
+                desenha = 1;
                 //enquanto prox argumento é numero...
                 while(i < argc && numero(argv[i]))
                 {
@@ -101,12 +101,12 @@ int main(int argc, char *argv[]) {
             menu = 1;
         }else
         {
-            fprintf(stderr, "Opcao desconhecida: %s\n\n", argv[i]);
+            fprintf(stderr, "Opcao desconhecida: %s\nDigite -help para lista de comandos\n", argv[i]);
             i++; //incrementa cursor
         }
     }
 
-    if(!menu)
+    if(!menu && desenha)
     {
         geraDot(arvore);
 
